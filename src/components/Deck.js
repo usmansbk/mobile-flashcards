@@ -2,12 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Button from "./Button";
-import * as API from "../utils/api";
+import { useSelector } from "react-redux";
 
 export default function Deck({ route, navigation }) {
   const id = route.params.title;
-
-  const { title, questions } = API.getDeck(id);
+  const { title, questions } = useSelector((state) => state[id]);
 
   const toAddCard = () => navigation.navigate("AddCard", { title });
   const toStartQuiz = () => null;

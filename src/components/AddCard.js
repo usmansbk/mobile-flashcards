@@ -1,14 +1,19 @@
 import React, { useState, useRef } from "react";
 import { Text, TextInput, View, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
 import Button from "./Button";
-import * as API from "../utils/api";
+import { addCardToDeck } from "../redux/actions";
 
-export default function AddCard({ route }) {
+export default function AddCard({ route, navigation }) {
+  const dispatch = useDispatch();
   const title = route.params.title;
   const answerRef = useRef(null);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
-  const onSubmit = () => API.addCardToDeck(title, { question, answer });
+  const onSubmit = () => {
+    dispatch(addCardToDeck(title, { question, answer }));
+    navigation.pop();
+  };
 
   return (
     <View style={styles.container}>
@@ -21,6 +26,7 @@ export default function AddCard({ route }) {
           value={question}
           onChangeText={(text) => setQuestion(text)}
           onSubmitEditing={() => answerRef.current.focus()}
+          returnKeyType="next"
         />
 
         <Text style={styles.label}>Answer</Text>

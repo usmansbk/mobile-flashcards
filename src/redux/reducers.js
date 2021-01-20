@@ -1,4 +1,4 @@
-import { RECEIVE_DECKS } from "./actions";
+import { ADD_CARD_TO_DECK, RECEIVE_DECKS, SAVE_DECK_TITLE } from "./actions";
 
 export default function reducer(state = {}, action) {
   switch (action.type) {
@@ -6,6 +6,23 @@ export default function reducer(state = {}, action) {
       return {
         ...state,
         ...action.decks,
+      };
+    case SAVE_DECK_TITLE:
+      return {
+        ...state,
+        [action.title]: {
+          title: action.title,
+          questions: [],
+          timestamp: Date.now(),
+        },
+      };
+    case ADD_CARD_TO_DECK:
+      return {
+        ...state,
+        [action.title]: {
+          ...state[action.title],
+          questions: [...state[action.title].questions, action.card],
+        },
       };
     default:
       return state;

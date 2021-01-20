@@ -1,12 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import { Text, TextInput, View, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
 import Button from "./Button";
-import * as API from "../utils/api";
+import { saveDeckTitle } from "../redux/actions";
 
-export default function NewDeck() {
+export default function NewDeck({ navigation }) {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
-  const onSubmit = () => API.saveDeckTitle(value);
+  const onSubmit = () => {
+    dispatch(saveDeckTitle(title));
+    navigation.navigate("Deck", { title });
+  };
 
   return (
     <View style={styles.container}>

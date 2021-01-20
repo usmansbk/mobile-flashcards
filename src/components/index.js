@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useDispatch } from "react-redux";
 import Decks from "./Decks";
 import NewDeck from "./NewDeck";
 import Deck from "./Deck";
 import AddCard from "./AddCard";
+import { handleInitialData } from "../redux/actions";
 
 const Stack = createStackNavigator();
 
 export default function Screens() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(handleInitialData());
+  }, []);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
