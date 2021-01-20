@@ -1,14 +1,20 @@
 import React from "react";
-import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
 export default function Button({ children, onPress, disabled, secondary }) {
   return (
     <TouchableOpacity
       disabled={disabled}
       onPress={onPress}
-      style={[styles.container, styles.primary, disabled && styles.disabled]}
+      style={[
+        styles.container,
+        secondary ? styles.secondary : styles.primary,
+        disabled && styles.disabled,
+      ]}
     >
-      <Text style={[styles.text]}>{children}</Text>
+      <Text style={[styles.text, secondary && styles.secondaryText]}>
+        {children}
+      </Text>
     </TouchableOpacity>
   );
 }
@@ -26,8 +32,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "white",
   },
+  secondaryText: {
+    color: "tomato",
+  },
   primary: {
     backgroundColor: "tomato",
+  },
+  secondary: {
+    borderColor: "tomato",
+    borderWidth: 1,
   },
   disabled: {
     backgroundColor: "#d3d3d3",

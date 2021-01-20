@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Text,
   View,
@@ -13,8 +13,26 @@ export default function Decks({ navigation }) {
   const decks = API.getDecks();
   const data = Object.values(decks);
 
-  const onPressItem = () => null;
-  const onPressFAB = () => navigation.navigate("NewDeck");
+  const onPressItem = useCallback(
+    (title) => navigation.navigate("Deck", { title }),
+    []
+  );
+  const onPressFAB = useCallback(() => navigation.navigate("NewDeck"), []);
+  const renderItem = ({ item }) => {
+    const { title, questions } = item;
+    return (
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() => onPressItem(title)}
+      >
+        <Text style={styles.itemTitle}>{title}</Text>
+        <View style={styles.cardCount}>
+          <MaterialCommunityIcons name="cards-outline" size={24} />
+          <Text style={styles.count}>{questions.length}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -22,22 +40,8 @@ export default function Decks({ navigation }) {
       <FlatList
         data={data}
         contentContainerStyle={styles.list}
-        keyExtractor={(_, index) => String(index)}
-        renderItem={({ item }) => {
-          const { title, questions } = item;
-          return (
-            <TouchableOpacity
-              style={styles.itemContainer}
-              onPress={onPressItem}
-            >
-              <Text style={styles.itemTitle}>{title}</Text>
-              <View style={styles.cardCount}>
-                <MaterialCommunityIcons name="cards-outline" size={24} />
-                <Text style={styles.count}>{questions.length}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
+        keyExtractor={({ title }) => title}
+        renderItem={renderItem}
       />
       <FAB onPress={onPressFAB} />
     </View>
