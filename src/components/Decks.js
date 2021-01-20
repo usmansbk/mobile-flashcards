@@ -9,12 +9,12 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as API from "../utils/api";
 
-export default function Decks() {
+export default function Decks({ navigation }) {
   const decks = API.getDecks();
   const data = Object.values(decks);
 
   const onPressItem = () => null;
-  const onPressFAB = () => null;
+  const onPressFAB = () => navigation.navigate("NewDeck");
 
   return (
     <View style={styles.container}>
