@@ -26,7 +26,7 @@ const mock = {
   },
 };
 
-export function getDecks() {
+export async function getDecks() {
   return mock;
 }
 

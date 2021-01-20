@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as API from "../utils/api";
+import { useSelector } from "react-redux";
 
 export default function Decks({ navigation }) {
-  const decks = API.getDecks();
+  const decks = useSelector((state) => state);
   const data = Object.values(decks);
 
   const onPressItem = useCallback(
@@ -42,6 +42,7 @@ export default function Decks({ navigation }) {
         contentContainerStyle={styles.list}
         keyExtractor={({ title }) => title}
         renderItem={renderItem}
+        ListEmptyComponent={Empty}
       />
       <FAB onPress={onPressFAB} />
     </View>
@@ -57,12 +58,24 @@ function FAB({ onPress }) {
   );
 }
 
+function Empty() {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyTitle}>You haven't created any deck yet</Text>
+      <Text style={styles.emptySubtitle}>
+        Press the '+' button to create a new deck
+      </Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
   },
   list: {
+    flexGrow: 1,
     padding: 16,
     paddingTop: 0,
     paddingBottom: 100,
@@ -104,5 +117,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 8,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyTitle: {
+    fontSize: 24,
+    textAlign: "center",
+    marginVertical: 8,
+  },
+  emptySubtitle: {
+    textAlign: "center",
   },
 });
