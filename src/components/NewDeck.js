@@ -10,7 +10,7 @@ export default function NewDeck({ navigation }) {
   const [title, setTitle] = useState("");
   const onSubmit = () => {
     dispatch(saveDeckTitle(title));
-    navigation.navigate("Deck", { title });
+    navigation.replace("Deck", { title });
   };
 
   return (

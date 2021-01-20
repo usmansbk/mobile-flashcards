@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const DATA_KEY = "udaci_flashcards_decks";
+
 const mock = {
   React: {
     title: "React",
@@ -27,20 +29,48 @@ const mock = {
 };
 
 export async function getDecks() {
-  return mock;
+  const data = await AsyncStorage.getItem(DATA_KEY);
+  if (data) {
+    return JSON.parse(data);
+  }
+  return {};
 }
 
-export function getDeck(id) {
-  return mock[id];
+export async function getDeck(id) {
+  const data = await AsyncStorage.getItem(DATA_KEY);
+  if (data) {
+    const deck = JSON.parse(data)[id];
+    return deck;
+  }
+  return null;
 }
 
-export function saveDeckTitle(title) {
-  mock[title] = {
-    title,
-    questions: [],
+export async function saveDeckTitle(title) {
+  const data = await AsyncStorage.getItem(DATA_KEY);
+  const decks = data ? JSON.parse(data) : {};
+  const newDecks = {
+    ...decks,
+    [title]: {
+      title,
+      questions: [],
+    },
   };
+  await AsyncStorage.setItem(DATA_KEY, JSON.stringify(newDecks));
 }
 
-export function addCardToDeck(title, card) {
-  mock[title].questions.push(card);
+export async function addCardToDeck(title, card) {
+  const data = await AsyncStorage.getItem(DATA_KEY);
+  const decks = data ? JSON.parse(data) : {};
+  const newDecks = {
+    ...decks,
+    [title]: {
+      title,
+      questions: [...decks[title].questions, card],
+    },
+  };
+  await AsyncStorage.setItem(DATA_KEY, JSON.stringify(newDecks));
+}
+
+export async function persistDecks(decks) {
+  await AsyncStorage.setItem(DATA_KEY, JSON.stringify(decks));
 }
