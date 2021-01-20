@@ -6,6 +6,14 @@ export async function persistDecks(decks) {
   await AsyncStorage.setItem(DATA_KEY, JSON.stringify(decks));
 }
 
+export async function getDecks() {
+  const data = await AsyncStorage.getItem(DATA_KEY);
+  if (data) {
+    return JSON.parse(data);
+  }
+  return {};
+}
+
 // const mock = {
 //   React: {
 //     title: "React",
@@ -31,14 +39,6 @@ export async function persistDecks(decks) {
 //     ],
 //   },
 // };
-
-// export async function getDecks() {
-//   const data = await AsyncStorage.getItem(DATA_KEY);
-//   if (data) {
-//     return JSON.parse(data);
-//   }
-//   return {};
-// }
 
 // export async function getDeck(id) {
 //   const data = await AsyncStorage.getItem(DATA_KEY);
