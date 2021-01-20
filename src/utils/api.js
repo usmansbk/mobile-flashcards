@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const mock = {
+const mock = {
   React: {
     title: "React",
     questions: [
