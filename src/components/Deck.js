@@ -35,7 +35,7 @@ export default function Deck({ route, navigation }) {
       </Button>
       <Button onPress={toStartQuiz}>Start Quiz</Button>
       <Button danger onPress={onDelete}>
-        Delete
+        Delete Deck
       </Button>
     </View>
   );
