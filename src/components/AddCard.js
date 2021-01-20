@@ -32,7 +32,9 @@ export default function AddCard({ route }) {
           onChangeText={(text) => setAnswer(text)}
         />
       </View>
-      <Button onPress={onSubmit}>Add Card</Button>
+      <Button onPress={onSubmit} disabled={!(question && answer)}>
+        Add Card
+      </Button>
     </View>
   );
 }
