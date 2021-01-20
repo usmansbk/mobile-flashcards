@@ -15,7 +15,6 @@ export default function NewDeck() {
         <TextInput
           value={title}
           onChangeText={(text) => setTitle(text)}
-          autoCorrect={false}
           autoFocus
           multiline
           style={styles.input}

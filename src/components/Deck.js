@@ -4,10 +4,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Button from "./Button";
 import * as API from "../utils/api";
 
-export default function Deck({ route }) {
+export default function Deck({ route, navigation }) {
   const id = route.params.title;
 
   const { title, questions } = API.getDeck(id);
+
+  const toAddCard = () => navigation.navigate("AddCard", { title });
+  const toStartQuiz = () => null;
 
   return (
     <View style={styles.container}>
@@ -20,8 +23,10 @@ export default function Deck({ route }) {
           </Text>
         </View>
       </View>
-      <Button secondary>Add Card</Button>
-      <Button>Start Quiz</Button>
+      <Button secondary onPress={toAddCard}>
+        Add Card
+      </Button>
+      <Button onPress={toStartQuiz}>Start Quiz</Button>
     </View>
   );
 }
