@@ -1,15 +1,23 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
-import { useSelector } from "react-redux";
+import { deleteDeck } from "../redux/actions";
 
 export default function Deck({ route, navigation }) {
-  const id = route.params.title;
-  const { title, questions } = useSelector((state) => state[id]);
+  const dispatch = useDispatch();
+  const title = route.params.title;
+  const { questions } = useSelector((state) => state[title]) || {};
+
+  if (!questions) return null;
 
   const toAddCard = () => navigation.navigate("AddCard", { title });
   const toStartQuiz = () => null;
+  const onDelete = () => {
+    dispatch(deleteDeck(title));
+    navigation.pop();
+  };
 
   return (
     <View style={styles.container}>
@@ -26,6 +34,9 @@ export default function Deck({ route, navigation }) {
         Add Card
       </Button>
       <Button onPress={toStartQuiz}>Start Quiz</Button>
+      <Button danger onPress={onDelete}>
+        Delete
+      </Button>
     </View>
   );
 }

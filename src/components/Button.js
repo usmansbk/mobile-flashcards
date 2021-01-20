@@ -1,7 +1,13 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-export default function Button({ children, onPress, disabled, secondary }) {
+export default function Button({
+  children,
+  onPress,
+  disabled,
+  secondary,
+  danger,
+}) {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -9,6 +15,7 @@ export default function Button({ children, onPress, disabled, secondary }) {
       style={[
         styles.container,
         secondary ? styles.secondary : styles.primary,
+        danger && styles.danger,
         disabled && styles.disabled,
       ]}
     >
@@ -44,5 +51,8 @@ const styles = StyleSheet.create({
   },
   disabled: {
     backgroundColor: "#d3d3d3",
+  },
+  danger: {
+    backgroundColor: "red",
   },
 });

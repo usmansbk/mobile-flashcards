@@ -3,6 +3,14 @@ import * as API from "../utils/api";
 export const RECEIVE_DECKS = "decks/receive";
 export const SAVE_DECK_TITLE = "decks/save";
 export const ADD_CARD_TO_DECK = "deck/add_card";
+export const DELETE_DECK = "deckc/delete";
+
+export function deleteDeck(title) {
+  return {
+    type: DELETE_DECK,
+    title,
+  };
+}
 
 export function receiveDecks(decks) {
   return {
