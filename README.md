@@ -4,6 +4,8 @@ UdaciCards project is a mobile application (Android and iOS) that allows users t
 
 # Installation and Launch
 
+## This project has been tested on a real Android device
+
 - Clone the repo
 
 ```
