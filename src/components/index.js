@@ -7,9 +7,17 @@ const Stack = createStackNavigator();
 
 export default function Screens() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Decks" component={Decks} />
-      <Stack.Screen name="NewDeck" component={NewDeck} />
+    <Stack.Navigator>
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Decks"
+        component={Decks}
+      />
+      <Stack.Screen
+        options={{ title: "New Deck" }}
+        name="NewDeck"
+        component={NewDeck}
+      />
     </Stack.Navigator>
   );
 }
