@@ -16,7 +16,7 @@ export default function Deck({ route, navigation }) {
   const toStartQuiz = () => null;
   const onDelete = () => {
     dispatch(deleteDeck(title));
-    navigation.pop();
+    navigation.popToTop();
   };
 
   return (
