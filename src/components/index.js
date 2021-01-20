@@ -5,6 +5,7 @@ import Decks from "./Decks";
 import NewDeck from "./NewDeck";
 import Deck from "./Deck";
 import AddCard from "./AddCard";
+import Quiz from "./Quiz";
 import { handleInitialData } from "../redux/actions";
 
 const Stack = createStackNavigator();
@@ -36,6 +37,11 @@ export default function Screens() {
         options={{ title: "Add Card" }}
         name="AddCard"
         component={AddCard}
+      />
+      <Stack.Screen
+        name="Quiz"
+        component={Quiz}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

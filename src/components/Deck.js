@@ -13,7 +13,7 @@ export default function Deck({ route, navigation }) {
   if (!questions) return null;
 
   const toAddCard = () => navigation.navigate("AddCard", { title });
-  const toStartQuiz = () => null;
+  const toStartQuiz = () => navigation.navigate("Quiz", { title });
   const onDelete = () => {
     dispatch(deleteDeck(title));
     navigation.popToTop();
