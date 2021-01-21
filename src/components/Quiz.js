@@ -164,7 +164,7 @@ function Card({ total, card, index, currentIndex, swipeAnim }) {
             {
               translateX: swipeAnim.interpolate({
                 inputRange: [-1, 0, 1],
-                outputRange: [100, 0, -100],
+                outputRange: [300, 0, -300],
                 extrapolate: "clamp",
               }),
             },
