@@ -11,6 +11,13 @@ import { black, contrastText } from "../utils/colors";
 
 const Stack = createStackNavigator();
 
+const headerStyle = {
+  headerStyle: {
+    backgroundColor: black,
+  },
+  headerTintColor: contrastText,
+};
+
 export default function Screens() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,17 +32,17 @@ export default function Screens() {
         component={Decks}
       />
       <Stack.Screen
-        options={{ title: "New Deck" }}
+        options={{ title: "New Deck", ...headerStyle }}
         name="NewDeck"
         component={NewDeck}
       />
       <Stack.Screen
-        options={({ route }) => ({ title: route.params.title })}
+        options={({ route }) => ({ title: route.params.title, ...headerStyle })}
         name="Deck"
         component={Deck}
       />
       <Stack.Screen
-        options={{ title: "Add Card" }}
+        options={{ title: "Add Card", ...headerStyle }}
         name="AddCard"
         component={AddCard}
       />
@@ -44,10 +51,7 @@ export default function Screens() {
         component={Quiz}
         options={({ route }) => ({
           title: route.params.title,
-          headerStyle: {
-            backgroundColor: black,
-          },
-          headerTintColor: contrastText,
+          ...headerStyle,
         })}
       />
     </Stack.Navigator>

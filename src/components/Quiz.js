@@ -1,9 +1,12 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
 import Empty from "./Empty";
 import { IconButton } from "./Button";
 import { wrong, right, getColor, contrastText } from "../utils/colors";
+
+const { height } = Dimensions.get("window");
+const CARD_HEIGHT = height * 0.65;
 
 export default function Quiz({ route }) {
   const title = route.params.title;
@@ -17,16 +20,18 @@ export default function Quiz({ route }) {
   return (
     <View style={styles.container}>
       <View style={styles.cards}>
-        {questions.map((card, index) => (
-          <Card
-            number={index + 1}
-            total={questions.length}
-            card={card}
-            key={index}
-            color={getColor(index)}
-            offset={index}
-          />
-        ))}
+        {questions
+          .reverse()
+          .slice(0, 3)
+          .map((card, index) => (
+            <Card
+              total={questions.length}
+              card={card}
+              key={index}
+              color={getColor(index)}
+              index={index}
+            />
+          ))}
       </View>
       <View style={styles.buttons}>
         <IconButton name="close-thick" color={wrong} />
@@ -36,18 +41,26 @@ export default function Quiz({ route }) {
   );
 }
 
-function Card({ number, total, color, card, offset }) {
+function Card({ total, color, card, index }) {
+  const number = total - index;
+  const tailStyle =
+    number === 1
+      ? {}
+      : {
+          height: CARD_HEIGHT - number * 12,
+          transform: [
+            {
+              translateX: number * 4,
+            },
+          ],
+        };
   return (
     <View
       style={[
         styles.card,
         {
           backgroundColor: color,
-          transform: [
-            {
-              translateX: offset * -8,
-            },
-          ],
+          ...tailStyle,
         },
       ]}
     >
@@ -86,7 +99,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     flex: 1,
     width: "75%",
-    height: "80%",
+    height: CARD_HEIGHT,
     borderRadius: 20,
     padding: 16,
   },

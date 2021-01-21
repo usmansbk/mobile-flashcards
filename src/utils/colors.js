@@ -1,6 +1,6 @@
 export const wrong = "#c0392b";
 export const right = "#27ae60";
-export const primary = "tomato";
+export const primary = "#000";
 export const disabled = "#d3d3d3";
 export const danger = "red";
 export const background = "white";
