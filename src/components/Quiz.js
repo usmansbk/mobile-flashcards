@@ -1,9 +1,17 @@
-import React from "react";
-import { Text, View, StyleSheet, Dimensions } from "react-native";
+import React, { useRef } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableWithoutFeedback,
+  Animated,
+} from "react-native";
 import { useSelector } from "react-redux";
 import Empty from "./Empty";
 import { IconButton } from "./Button";
 import { wrong, right, getColor, contrastText } from "../utils/colors";
+import { useState } from "react";
 
 const { height } = Dimensions.get("window");
 const CARD_HEIGHT = height * 0.65;
@@ -56,6 +64,19 @@ class QuizContainer extends React.Component {
 }
 
 function Card({ total, card, index, currentIndex }) {
+  const [flipped, setFlip] = useState(false);
+  const flipAnim = useRef(new Animated.Value(0)).current;
+  const onPress = () => {
+    if (currentIndex === index) {
+      console.log("animate");
+      Animated.timing(flipAnim, {
+        toValue: flipped ? 0 : 1,
+        duration: 200,
+        useNativeDriver: false,
+      }).start(() => setFlip((val) => !val));
+    }
+  };
+
   const color = getColor(index);
   const cardIndex = index % PAGINATION;
   const tailStyle =
@@ -69,29 +90,83 @@ function Card({ total, card, index, currentIndex }) {
             },
           ],
         };
+
   return (
-    <View
-      style={[
-        styles.card,
-        {
-          backgroundColor: color,
-          ...tailStyle,
-        },
-      ]}
-    >
-      <View style={styles.header}>
-        <Text style={styles.text}>Question</Text>
-        <Text style={styles.caption}>
-          {index + 1}/{total}
-        </Text>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.cardContainer}>
+        <Animated.View
+          style={[
+            styles.card,
+            {
+              backgroundColor: color,
+              zIndex: flipAnim,
+              transform: [
+                {
+                  rotateY: flipAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ["0deg", "180deg"],
+                    extrapolate: "clamp",
+                  }),
+                },
+                {
+                  scaleX: -1,
+                },
+              ],
+              ...tailStyle,
+            },
+          ]}
+        >
+          <View style={styles.header}>
+            <Text style={styles.text}>Answer</Text>
+            <Text style={styles.caption}>
+              {index + 1}/{total}
+            </Text>
+          </View>
+          <View style={styles.content}>
+            <Text style={[styles.text, styles.mainText]}>{card.answer}</Text>
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.caption}>Tap to flip</Text>
+          </View>
+        </Animated.View>
+        <Animated.View
+          style={[
+            styles.card,
+            {
+              backgroundColor: color,
+              zIndex: flipAnim.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 0],
+                extrapolate: "clamp",
+              }),
+              transform: [
+                {
+                  rotateY: flipAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ["0deg", "180deg"],
+                    extrapolate: "clamp",
+                  }),
+                },
+              ],
+              ...tailStyle,
+            },
+          ]}
+        >
+          <View style={styles.header}>
+            <Text style={styles.text}>Question</Text>
+            <Text style={styles.caption}>
+              {index + 1}/{total}
+            </Text>
+          </View>
+          <View style={styles.content}>
+            <Text style={[styles.text, styles.mainText]}>{card.question}</Text>
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.caption}>Tap to flip</Text>
+          </View>
+        </Animated.View>
       </View>
-      <View style={styles.content}>
-        <Text style={[styles.text, styles.mainText]}>{card.question}</Text>
-      </View>
-      <View style={styles.footer}>
-        <Text style={styles.caption}>Tap to flip</Text>
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -110,11 +185,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
-  card: {
+  cardContainer: {
     position: "absolute",
-    flex: 1,
     width: "85%",
     height: CARD_HEIGHT,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
     borderRadius: 20,
     padding: 16,
   },
