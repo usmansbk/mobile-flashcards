@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import {
   Text,
   View,
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  Animated,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
@@ -14,25 +15,36 @@ import { background, primary, black } from "../utils/colors";
 export default function Decks({ navigation }) {
   const decks = useSelector((state) => state);
   const data = Object.values(decks);
+  const animations = useRef({}).current;
 
-  const onPressItem = useCallback(
-    (title) => navigation.navigate("Deck", { title }),
-    []
-  );
+  const onPressItem = useCallback((title) => {
+    Animated.timing(animations[title], {
+      toValue: 1.04,
+      duration: 100,
+      useNativeDriver: false,
+    }).start(() => {
+      navigation.navigate("Deck", { title });
+      animations[title].setValue(1);
+    });
+  }, []);
   const onPressFAB = useCallback(() => navigation.navigate("NewDeck"), []);
   const renderItem = ({ item }) => {
     const { title, questions } = item;
+    animations[title] = new Animated.Value(1);
+
     return (
-      <TouchableOpacity
-        style={styles.itemContainer}
-        onPress={() => onPressItem(title)}
-      >
-        <Text style={styles.itemTitle}>{title}</Text>
-        <View style={styles.cardCount}>
-          <MaterialCommunityIcons name="cards-outline" size={24} />
-          <Text style={styles.count}>{questions.length}</Text>
-        </View>
-      </TouchableOpacity>
+      <Animated.View style={{ transform: [{ scale: animations[title] }] }}>
+        <TouchableOpacity
+          style={styles.itemContainer}
+          onPress={() => onPressItem(title)}
+        >
+          <Text style={styles.itemTitle}>{title}</Text>
+          <View style={styles.cardCount}>
+            <MaterialCommunityIcons name="cards-outline" size={24} />
+            <Text style={styles.count}>{questions.length}</Text>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     );
   };
 

@@ -211,7 +211,7 @@ function Card({ total, card, index, currentIndex, swipeAnim }) {
             <Text style={[styles.text, styles.mainText]}>{card.answer}</Text>
           </View>
           <View style={styles.footer}>
-            <Text style={styles.caption}>Tap to flip</Text>
+            <Text style={styles.caption}>Tap to show question</Text>
           </View>
         </Animated.View>
         <Animated.View
@@ -247,7 +247,7 @@ function Card({ total, card, index, currentIndex, swipeAnim }) {
             <Text style={[styles.text, styles.mainText]}>{card.question}</Text>
           </View>
           <View style={styles.footer}>
-            <Text style={styles.caption}>Tap to flip</Text>
+            <Text style={styles.caption}>Tap to show answer</Text>
           </View>
         </Animated.View>
       </Animated.View>
