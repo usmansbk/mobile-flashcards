@@ -12,45 +12,58 @@ export default function Quiz({ route }) {
   const title = route.params.title;
   const { questions } = useSelector((state) => state[title]);
 
-  if (!questions.length) {
+  return <QuizContainer questions={questions} />;
+}
+
+class QuizContainer extends React.Component {
+  state = {
+    currentIndex: 0,
+  };
+
+  render() {
+    const { questions } = this.props;
+    const { currentIndex } = this.state;
+
+    if (!questions.length) {
+      return (
+        <Empty title="Sorry, you cannot take a quiz because there are no cards in the deck." />
+      );
+    }
     return (
-      <Empty title="Sorry, you cannot take a quiz because there are no cards in the deck." />
+      <View style={styles.container}>
+        <View style={styles.cards}>
+          {questions
+            .reverse()
+            .slice(currentIndex, currentIndex + 3)
+            .map((card, index) => (
+              <Card
+                total={questions.length}
+                card={card}
+                key={index}
+                color={getColor(index)}
+                index={index}
+              />
+            ))}
+        </View>
+        <View style={styles.buttons}>
+          <IconButton name="close-thick" color={wrong} />
+          <IconButton name="check-bold" color={right} />
+        </View>
+      </View>
     );
   }
-  return (
-    <View style={styles.container}>
-      <View style={styles.cards}>
-        {questions
-          .reverse()
-          .slice(0, 3)
-          .map((card, index) => (
-            <Card
-              total={questions.length}
-              card={card}
-              key={index}
-              color={getColor(index)}
-              index={index}
-            />
-          ))}
-      </View>
-      <View style={styles.buttons}>
-        <IconButton name="close-thick" color={wrong} />
-        <IconButton name="check-bold" color={right} />
-      </View>
-    </View>
-  );
 }
 
 function Card({ total, color, card, index }) {
-  const number = total - index;
+  const cardIndex = 3 - index;
   const tailStyle =
-    number === 1
+    cardIndex === 0
       ? {}
       : {
-          height: CARD_HEIGHT - number * 12,
+          height: CARD_HEIGHT - cardIndex * 12,
           transform: [
             {
-              translateX: number * 4,
+              translateX: cardIndex * 4,
             },
           ],
         };
@@ -67,7 +80,7 @@ function Card({ total, color, card, index }) {
       <View style={styles.header}>
         <Text style={styles.text}>Question</Text>
         <Text style={styles.caption}>
-          {number}/{total}
+          {index}/{total}
         </Text>
       </View>
       <View style={styles.content}>
@@ -98,7 +111,7 @@ const styles = StyleSheet.create({
   card: {
     position: "absolute",
     flex: 1,
-    width: "75%",
+    width: "85%",
     height: CARD_HEIGHT,
     borderRadius: 20,
     padding: 16,
