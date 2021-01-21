@@ -9,24 +9,49 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import Empty from "./Empty";
-import { IconButton } from "./Button";
+import Button, { IconButton } from "./Button";
 import { wrong, right, getColor, contrastText } from "../utils/colors";
 
 const { height } = Dimensions.get("window");
 const CARD_HEIGHT = height * 0.65;
 const PAGINATION = 3;
 
-export default function Quiz({ route }) {
+export default function Quiz({ route, navigation }) {
   const title = route.params.title;
   const { questions } = useSelector((state) => state[title]);
 
-  return <QuizContainer questions={questions} />;
+  return <QuizContainer questions={questions} navigation={navigation} />;
 }
 
 class QuizContainer extends React.Component {
   state = {
     currentIndex: 0,
+    correct: 0,
   };
+
+  _wrong = () => {
+    if (this.state.currentIndex < this.props.questions.length) {
+      this.setState((prev) => ({
+        currentIndex: prev.currentIndex + 1,
+      }));
+    }
+  };
+
+  _correct = () => {
+    if (this.state.currentIndex < this.props.questions.length) {
+      this.setState((prev) => ({
+        currentIndex: prev.currentIndex + 1,
+        correct: prev.correct + 1,
+      }));
+    }
+  };
+
+  _backToDeck = () => this.props.navigation.goBack();
+  _restart = () =>
+    this.setState({
+      currentIndex: 0,
+      correct: 0,
+    });
 
   render() {
     const { questions } = this.props;
@@ -54,8 +79,25 @@ class QuizContainer extends React.Component {
             .reverse()}
         </View>
         <View style={styles.buttons}>
-          <IconButton name="close-thick" color={wrong} />
-          <IconButton name="check-bold" color={right} />
+          {currentIndex === questions.length ? (
+            <>
+              <Button onPress={this._restart}>Restart Quiz</Button>
+              <Button onPress={this._backToDeck}>Back to Deck</Button>
+            </>
+          ) : (
+            <>
+              <IconButton
+                name="close-thick"
+                color={wrong}
+                onPress={this._wrong}
+              />
+              <IconButton
+                name="check-bold"
+                color={right}
+                onPress={this._correct}
+              />
+            </>
+          )}
         </View>
       </View>
     );
