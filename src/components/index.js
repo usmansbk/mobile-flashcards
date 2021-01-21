@@ -7,6 +7,7 @@ import Deck from "./Deck";
 import AddCard from "./AddCard";
 import Quiz from "./Quiz";
 import { handleInitialData } from "../redux/actions";
+import { black, contrastText } from "../utils/colors";
 
 const Stack = createStackNavigator();
 
@@ -41,7 +42,13 @@ export default function Screens() {
       <Stack.Screen
         name="Quiz"
         component={Quiz}
-        options={({ route }) => ({ title: route.params.title })}
+        options={({ route }) => ({
+          title: route.params.title,
+          headerStyle: {
+            backgroundColor: black,
+          },
+          headerTintColor: contrastText,
+        })}
       />
     </Stack.Navigator>
   );
