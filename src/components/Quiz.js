@@ -138,15 +138,14 @@ function Card({ total, card, index, currentIndex, swipeAnim }) {
   };
 
   const color = getColor(index);
-  const cardIndex = index % PAGINATION;
   const tailStyle =
     index === currentIndex
       ? {}
       : {
-          height: CARD_HEIGHT - cardIndex * 12,
+          height: CARD_HEIGHT - index * 12,
           transform: [
             {
-              translateX: cardIndex * 4,
+              translateX: index * 4,
             },
           ],
         };
