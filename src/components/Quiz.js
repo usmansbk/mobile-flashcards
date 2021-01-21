@@ -55,7 +55,7 @@ class QuizContainer extends React.Component {
 
   render() {
     const { questions } = this.props;
-    const { currentIndex } = this.state;
+    const { currentIndex, correct } = this.state;
 
     if (!questions.length) {
       return (
@@ -65,18 +65,24 @@ class QuizContainer extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.cards}>
-          {questions
-            .map((card, index) => (
-              <Card
-                key={index}
-                card={card}
-                index={index}
-                currentIndex={currentIndex}
-                total={questions.length}
-              />
-            ))
-            .slice(currentIndex, currentIndex + PAGINATION)
-            .reverse()}
+          {currentIndex === questions.length ? (
+            <Text style={styles.score}>
+              You got {correct} answer{correct > 1 ? "s" : ""} correct
+            </Text>
+          ) : (
+            questions
+              .map((card, index) => (
+                <Card
+                  key={index}
+                  card={card}
+                  index={index}
+                  currentIndex={currentIndex}
+                  total={questions.length}
+                />
+              ))
+              .slice(currentIndex, currentIndex + PAGINATION)
+              .reverse()
+          )}
         </View>
         <View style={styles.buttons}>
           {currentIndex === questions.length ? (
@@ -259,5 +265,10 @@ const styles = StyleSheet.create({
   },
   footer: {
     alignItems: "center",
+  },
+  score: {
+    fontSize: 34,
+    color: contrastText,
+    textAlign: "center",
   },
 });
