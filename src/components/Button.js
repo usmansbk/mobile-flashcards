@@ -37,7 +37,7 @@ export default function Button({
 export function IconButton({ name, onPress, color }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.iconButton}>
-      <MaterialCommunityIcons name={name} size={30} color={color} />
+      <MaterialCommunityIcons name={name} size={24} color={color} />
     </TouchableOpacity>
   );
 }
