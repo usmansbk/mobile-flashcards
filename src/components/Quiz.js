@@ -82,7 +82,7 @@ class QuizContainer extends React.Component {
         <View style={styles.cards}>
           {currentIndex === questions.length ? (
             <Text style={styles.score}>
-              You got {correct} answer{correct > 1 ? "s" : ""} correct.
+              You got {correct} out of {questions.length} correct.
             </Text>
           ) : (
             questions
