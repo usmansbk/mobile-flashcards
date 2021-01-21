@@ -4,12 +4,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import Navigator from "./src/components";
 import { Provider } from "react-redux";
 import store from "./src/redux";
+import { black } from "./src/utils/colors";
 
 export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <StatusBar backgroundColor="white" barStyle="dark-content" />
+        <StatusBar backgroundColor={black} barStyle="light-content" />
         <Navigator />
       </NavigationContainer>
     </Provider>

@@ -7,6 +7,7 @@ import { wrong, right, getColor, contrastText } from "../utils/colors";
 
 const { height } = Dimensions.get("window");
 const CARD_HEIGHT = height * 0.65;
+const PAGINATION = 3;
 
 export default function Quiz({ route }) {
   const title = route.params.title;
@@ -33,17 +34,17 @@ class QuizContainer extends React.Component {
       <View style={styles.container}>
         <View style={styles.cards}>
           {questions
-            .reverse()
-            .slice(currentIndex, currentIndex + 3)
             .map((card, index) => (
               <Card
-                total={questions.length}
-                card={card}
                 key={index}
-                color={getColor(index)}
+                card={card}
                 index={index}
+                currentIndex={currentIndex}
+                total={questions.length}
               />
-            ))}
+            ))
+            .slice(currentIndex, currentIndex + PAGINATION)
+            .reverse()}
         </View>
         <View style={styles.buttons}>
           <IconButton name="close-thick" color={wrong} />
@@ -54,10 +55,11 @@ class QuizContainer extends React.Component {
   }
 }
 
-function Card({ total, color, card, index }) {
-  const cardIndex = 3 - index;
+function Card({ total, card, index, currentIndex }) {
+  const color = getColor(index);
+  const cardIndex = index % PAGINATION;
   const tailStyle =
-    cardIndex === 0
+    index === currentIndex
       ? {}
       : {
           height: CARD_HEIGHT - cardIndex * 12,
@@ -80,7 +82,7 @@ function Card({ total, color, card, index }) {
       <View style={styles.header}>
         <Text style={styles.text}>Question</Text>
         <Text style={styles.caption}>
-          {index}/{total}
+          {index + 1}/{total}
         </Text>
       </View>
       <View style={styles.content}>
