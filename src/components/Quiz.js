@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   Text,
   View,
@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import Empty from "./Empty";
 import { IconButton } from "./Button";
 import { wrong, right, getColor, contrastText } from "../utils/colors";
-import { useState } from "react";
 
 const { height } = Dimensions.get("window");
 const CARD_HEIGHT = height * 0.65;
@@ -68,10 +67,8 @@ function Card({ total, card, index, currentIndex }) {
   const flipAnim = useRef(new Animated.Value(0)).current;
   const onPress = () => {
     if (currentIndex === index) {
-      console.log("animate");
       Animated.timing(flipAnim, {
         toValue: flipped ? 0 : 1,
-        duration: 200,
         useNativeDriver: false,
       }).start(() => setFlip((val) => !val));
     }
