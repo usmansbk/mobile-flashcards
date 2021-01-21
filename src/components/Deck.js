@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
 import { deleteDeck } from "../redux/actions";
 import { background } from "../utils/colors";
-import * as Notifications from "../utils/notifications";
 
 export default function Deck({ route, navigation }) {
   const dispatch = useDispatch();
