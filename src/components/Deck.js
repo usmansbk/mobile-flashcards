@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
 import { deleteDeck } from "../redux/actions";
+import { background } from "../utils/colors";
 
 export default function Deck({ route, navigation }) {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "white",
+    backgroundColor: background,
   },
   title: {
     fontSize: 37,

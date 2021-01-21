@@ -9,6 +9,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import Empty from "./Empty";
+import { background, primary, black } from "../utils/colors";
 
 export default function Decks({ navigation }) {
   const decks = useSelector((state) => state);
@@ -71,7 +72,7 @@ function EmptyList() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: background,
   },
   list: {
     flexGrow: 1,
@@ -83,12 +84,12 @@ const styles = StyleSheet.create({
     padding: 16,
     fontWeight: "bold",
     fontSize: 27,
-    color: "#000",
+    color: black,
   },
   itemContainer: {
     padding: 10,
     elevation: 4,
-    backgroundColor: "white",
+    backgroundColor: background,
     margin: 4,
     borderRadius: 4,
   },
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     width: FAB_SIZE,
     height: FAB_SIZE,
     borderRadius: FAB_SIZE / 2,
-    backgroundColor: "tomato",
+    backgroundColor: primary,
     justifyContent: "center",
     alignItems: "center",
     elevation: 8,

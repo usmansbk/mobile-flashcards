@@ -1,0 +1,9 @@
+export const wrong = "#c0392b";
+export const right = "#27ae60";
+export const primary = "tomato";
+export const disabled = "#d3d3d3";
+export const danger = "red";
+export const background = "white";
+export const contrastText = "white";
+export const black = "#000";
+export const inputBackground = "#f9f9f9";

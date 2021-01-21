@@ -4,6 +4,7 @@ import { Text, TextInput, View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
 import { saveDeckTitle } from "../redux/actions";
+import { background } from "../utils/colors";
 
 export default function NewDeck({ navigation }) {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export default function NewDeck({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: background,
     padding: 16,
   },
   title: {

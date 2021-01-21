@@ -3,6 +3,7 @@ import { Text, TextInput, View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import Button from "./Button";
 import { addCardToDeck } from "../redux/actions";
+import { background, inputBackground } from "../utils/colors";
 
 export default function AddCard({ route, navigation }) {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ export default function AddCard({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: background,
     padding: 16,
   },
   label: {
@@ -61,6 +62,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 4,
     marginBottom: 24,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: inputBackground,
   },
 });

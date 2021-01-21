@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { background } from "../utils/colors";
 
 export default function Empty({ title, subtitle }) {
   return (
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: background,
   },
   title: {
     fontSize: 24,

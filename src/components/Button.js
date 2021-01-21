@@ -1,5 +1,13 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  primary,
+  disabled,
+  danger,
+  background,
+  contrastText,
+} from "../utils/colors";
 
 export default function Button({
   children,
@@ -26,6 +34,14 @@ export default function Button({
   );
 }
 
+export function IconButton({ name, onPress, color }) {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.iconButton}>
+      <MaterialCommunityIcons name={name} size={30} color={color} />
+    </TouchableOpacity>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     height: 48,
@@ -37,22 +53,32 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
-    color: "white",
+    color: contrastText,
   },
   secondaryText: {
-    color: "tomato",
+    color: primary,
   },
   primary: {
-    backgroundColor: "tomato",
+    backgroundColor: primary,
   },
   secondary: {
-    borderColor: "tomato",
+    borderColor: primary,
     borderWidth: 1,
   },
   disabled: {
-    backgroundColor: "#d3d3d3",
+    backgroundColor: disabled,
   },
   danger: {
-    backgroundColor: "red",
+    backgroundColor: danger,
+  },
+  iconButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 4,
+    backgroundColor: background,
+    margin: 10,
   },
 });
