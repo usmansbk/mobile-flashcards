@@ -110,6 +110,9 @@ const styles = StyleSheet.create({
   mainText: {
     fontSize: 20,
   },
+  caption: {
+    color: contrastText,
+  },
   content: {
     flex: 1,
     justifyContent: "center",
