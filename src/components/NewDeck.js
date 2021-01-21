@@ -22,7 +22,6 @@ export default function NewDeck({ navigation }) {
           value={title}
           onChangeText={(text) => setTitle(text)}
           autoFocus
-          multiline
           style={styles.input}
           placeholder="Deck Title"
         />

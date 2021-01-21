@@ -38,7 +38,6 @@ export default function AddCard({ route, navigation }) {
           placeholder="Type your answer"
           value={answer}
           onChangeText={(text) => setAnswer(text)}
-          onSubmitEditing={onSubmit}
         />
       </View>
       <Button onPress={onSubmit} disabled={!(question && answer)}>

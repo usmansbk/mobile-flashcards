@@ -14,7 +14,7 @@ export default function Quiz({ route }) {
 
   if (!questions.length) {
     return (
-      <Empty title="Sorry you cannot take a quiz because there are no cards in the deck." />
+      <Empty title="Sorry, you cannot take a quiz because there are no cards in the deck." />
     );
   }
   return (
