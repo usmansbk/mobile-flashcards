@@ -29,6 +29,8 @@ class QuizContainer extends React.Component {
     correct: 0,
   };
 
+  swipeAnim = new Animated.Value(0);
+
   _wrong = () => {
     if (this.state.currentIndex < this.props.questions.length) {
       this.setState((prev) => ({
@@ -67,7 +69,7 @@ class QuizContainer extends React.Component {
         <View style={styles.cards}>
           {currentIndex === questions.length ? (
             <Text style={styles.score}>
-              You got {correct} answer{correct > 1 ? "s" : ""} correct
+              You got {correct} answer{correct > 1 ? "s" : ""} correct.
             </Text>
           ) : (
             questions
@@ -78,6 +80,7 @@ class QuizContainer extends React.Component {
                   index={index}
                   currentIndex={currentIndex}
                   total={questions.length}
+                  anim={this.swipeAnim}
                 />
               ))
               .slice(currentIndex, currentIndex + PAGINATION)
