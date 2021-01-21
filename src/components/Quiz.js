@@ -31,21 +31,33 @@ class QuizContainer extends React.Component {
 
   swipeAnim = new Animated.Value(0);
 
-  _wrong = () => {
-    if (this.state.currentIndex < this.props.questions.length) {
-      this.setState((prev) => ({
-        currentIndex: prev.currentIndex + 1,
-      }));
-    }
+  handleWrong = () => {
+    Animated.timing(this.swipeAnim, {
+      toValue: 1,
+      useNativeDriver: false,
+    }).start(() => {
+      if (this.state.currentIndex < this.props.questions.length) {
+        this.setState((prev) => ({
+          currentIndex: prev.currentIndex + 1,
+        }));
+      }
+      this.swipeAnim.setValue(0);
+    });
   };
 
-  _correct = () => {
-    if (this.state.currentIndex < this.props.questions.length) {
-      this.setState((prev) => ({
-        currentIndex: prev.currentIndex + 1,
-        correct: prev.correct + 1,
-      }));
-    }
+  handleCorrect = () => {
+    Animated.timing(this.swipeAnim, {
+      toValue: -1,
+      useNativeDriver: false,
+    }).start(() => {
+      if (this.state.currentIndex < this.props.questions.length) {
+        this.setState((prev) => ({
+          currentIndex: prev.currentIndex + 1,
+          correct: prev.correct + 1,
+        }));
+      }
+      this.swipeAnim.setValue(0);
+    });
   };
 
   _backToDeck = () => this.props.navigation.goBack();
@@ -80,7 +92,7 @@ class QuizContainer extends React.Component {
                   index={index}
                   currentIndex={currentIndex}
                   total={questions.length}
-                  anim={this.swipeAnim}
+                  swipeAnim={this.swipeAnim}
                 />
               ))
               .slice(currentIndex, currentIndex + PAGINATION)
@@ -98,12 +110,12 @@ class QuizContainer extends React.Component {
               <IconButton
                 name="close-thick"
                 color={wrong}
-                onPress={this._wrong}
+                onPress={this.handleWrong}
               />
               <IconButton
                 name="check-bold"
                 color={right}
-                onPress={this._correct}
+                onPress={this.handleCorrect}
               />
             </>
           )}
@@ -113,7 +125,7 @@ class QuizContainer extends React.Component {
   }
 }
 
-function Card({ total, card, index, currentIndex }) {
+function Card({ total, card, index, currentIndex, swipeAnim }) {
   const [flipped, setFlip] = useState(false);
   const flipAnim = useRef(new Animated.Value(0)).current;
   const onPress = () => {
@@ -138,10 +150,36 @@ function Card({ total, card, index, currentIndex }) {
             },
           ],
         };
+  const firstCardStyle =
+    index === currentIndex
+      ? {
+          transform: [
+            {
+              rotateZ: swipeAnim.interpolate({
+                inputRange: [-1, 0, 1],
+                outputRange: ["30deg", "0deg", "-30deg"],
+                extrapolate: "clamp",
+              }),
+            },
+            {
+              translateX: swipeAnim.interpolate({
+                inputRange: [-1, 0, 1],
+                outputRange: [100, 0, -100],
+                extrapolate: "clamp",
+              }),
+            },
+          ],
+          opacity: swipeAnim.interpolate({
+            inputRange: [-1, 0, 1],
+            outputRange: [0, 1, 0],
+            extrapolate: "clamp",
+          }),
+        }
+      : {};
 
   return (
     <TouchableWithoutFeedback onPress={onPress}>
-      <View style={styles.cardContainer}>
+      <Animated.View style={[styles.cardContainer, firstCardStyle]}>
         <Animated.View
           style={[
             styles.card,
@@ -213,7 +251,7 @@ function Card({ total, card, index, currentIndex }) {
             <Text style={styles.caption}>Tap to flip</Text>
           </View>
         </Animated.View>
-      </View>
+      </Animated.View>
     </TouchableWithoutFeedback>
   );
 }
