@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import Empty from "./Empty";
 import Button, { IconButton } from "./Button";
 import { wrong, right, getColor, contrastText } from "../utils/colors";
-import * as Notifications from "../utils/notifications";
 
 const { height } = Dimensions.get("window");
 const CARD_HEIGHT = height * 0.65;
