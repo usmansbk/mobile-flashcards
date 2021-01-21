@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import Empty from "./Empty";
 
 export default function Decks({ navigation }) {
   const decks = useSelector((state) => state);
@@ -42,7 +43,7 @@ export default function Decks({ navigation }) {
         contentContainerStyle={styles.list}
         keyExtractor={({ title }) => title}
         renderItem={renderItem}
-        ListEmptyComponent={Empty}
+        ListEmptyComponent={EmptyList}
       />
       <FAB onPress={onPressFAB} />
     </View>
@@ -58,14 +59,12 @@ function FAB({ onPress }) {
   );
 }
 
-function Empty() {
+function EmptyList() {
   return (
-    <View style={styles.emptyContainer}>
-      <Text style={styles.emptyTitle}>You haven't created any deck yet</Text>
-      <Text style={styles.emptySubtitle}>
-        Press the '+' button to create a new deck
-      </Text>
-    </View>
+    <Empty
+      title="You haven't created any decks yet"
+      subtitle="Press the '+' button to create a new deck"
+    />
   );
 }
 
@@ -117,18 +116,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 8,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  emptyTitle: {
-    fontSize: 24,
-    textAlign: "center",
-    marginVertical: 8,
-  },
-  emptySubtitle: {
-    textAlign: "center",
   },
 });

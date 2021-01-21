@@ -41,7 +41,7 @@ export default function Screens() {
       <Stack.Screen
         name="Quiz"
         component={Quiz}
-        options={{ headerShown: false }}
+        options={({ route }) => ({ title: route.params.title })}
       />
     </Stack.Navigator>
   );
