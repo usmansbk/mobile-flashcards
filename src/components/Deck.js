@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
@@ -21,7 +21,7 @@ export default function Deck({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.count}>
@@ -38,13 +38,13 @@ export default function Deck({ route, navigation }) {
       <Button danger onPress={onDelete}>
         Delete Deck
       </Button>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 16,
     backgroundColor: background,
   },
